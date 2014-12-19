@@ -1,0 +1,23 @@
+/*How we can work together section*/
+
+#section-three div section i{
+    width:100%;
+    text-align:center;
+    padding-top:0.3em;
+    color: $brand-colour-1;
+    @include font-size(15);    
+}
+
+#section-three div section h3{
+    font-family: $brand-font-1;
+    @media(max-width: 768px){
+        @include font-size(2.0);    
+    }
+    @media(min-width: 769px){
+        @include font-size(2.5);    
+    }
+    text-align: center;
+    padding:0 0 0.5em 0;
+    color: $brand-colour-3;
+}
+

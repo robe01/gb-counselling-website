@@ -1,0 +1,131 @@
+
+/*Styling for all sections*/
+
+.white-background{
+    background:$brand-colour-2;
+}
+
+.section-bottom{
+    padding-bottom:5.0em;
+}
+
+.section-title-container{
+    font-family: $brand-font-1;
+    color: $brand-colour-2;
+    padding:0;
+}
+
+.section-title-container h2{
+    @media(max-width: 768px){
+        @include font-size(4.0);    
+    }
+    @media(min-width: 769px){
+        @include font-size(5.0);    
+    }
+    font-family:$brand-font-1;
+    z-index:1000;
+}
+
+p.content-info{
+    margin:0;
+}
+
+.content-info{
+    font-family: $brand-font-2;
+    @include font-size(1.7);
+    @media(min-width: 768px){
+        padding-right: 1.0em;
+        padding-left: 1.0em;
+    }  
+    text-align:justify;
+}
+
+.font-brand-color-3{
+    color: $brand-colour-3;
+}
+
+.font-brand-color-2{
+    color: $brand-colour-2;
+}
+
+.font-brand-color-1{
+    color: $brand-colour-1;
+}
+
+.remove-padding{
+    padding:0;
+}
+
+
+/*Opacity class for fading in elements on scroll, needed for javascript scroll in animation*/
+
+.scroll-in-opacity{
+    @include opacity(0);
+}
+
+
+/*For perfect vertical centering*/
+
+.section-title-container .is-table{
+    
+    @media(max-width: 768px){
+        padding:5.0em 0 5.0em 0;
+    }  
+    @media(min-width: 768px){
+        padding:12.5em 0 12.5em 0;
+    } 
+}
+
+.is-table{
+    display:table;
+    height:100%;
+    width:100%;    
+}
+
+.table-cell{
+    display:table-cell;
+    vertical-align:middle;
+    text-align:center;
+}
+
+
+
+/*Panel collapse for testimonials and services*/
+
+.panel-collapse{
+    background:#ccc;
+    color:$brand-colour-3;
+    border-bottom:solid gray 1px;
+    border-top:solid white 1px;
+}
+
+.panel-collapse:last-child{
+    border-bottom:none;
+}
+
+.panel-collapse:first-child{
+    border-top:none;
+}
+
+.panel-collapse > p{
+    margin:0;
+    padding-top:1.0em;
+    font-family: $brand-font-2;
+    text-align:justify;
+    @include font-size(1.7);
+    padding:1.0em 2.0em 2.0em 2.0em;
+    background:$brand-colour-2;
+    display:none;
+    color:$brand-colour-3;
+    border-top:solid gray 1px;
+}
+    
+.panel-collapse > h3{
+    font-family: $brand-font-1;
+    @include font-size(1.7);
+    padding:1.0em 1.0em 1.0em 1.0em;    
+}
+
+
+
+

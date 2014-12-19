@@ -1,0 +1,49 @@
+@import "compass/css3";
+
+
+body{
+    background:black;
+}
+
+//REM to the base of 10
+
+html{
+    font-size:62.5%;
+}
+
+/*Heading Reset*/
+
+h1, h2, h3, h4, h5, h6{
+    margin:0px;
+    font-weight:normal;
+}
+
+/*Brand Colour*/
+
+$brand-colour-1: #c00000; //red
+$brand-colour-2: white; //white
+$brand-colour-3: #080808; //black
+
+/*Brand Font Family*/
+
+$brand-font-1: cinzel;
+$brand-font-2: sinanova-regularregular;
+
+/*Default Font Size using REM*/
+
+@mixin font-size($sizeValue: 1.6){
+  font-size: ($sizeValue * 10) + px;
+  font-size: $sizeValue + rem;
+}
+
+/*Vertical scroll bar styling */
+
+::-webkit-scrollbar {
+    width: 8px;
+    background:#989898;
+}
+ 
+::-webkit-scrollbar-thumb {
+    background:goldenrod;
+}
+
