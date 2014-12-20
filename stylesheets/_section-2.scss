@@ -1,0 +1,83 @@
+/*Information section*/
+
+.section-2-sub-title{
+    font-size: 1.7em;
+    font-family: $brand-font-1;
+    text-align: center;
+    padding:0 0 1.0em 0;
+    color: $brand-colour-3;
+}
+
+#personal-image-container{
+    @media(max-width: 768px){
+        padding:4.5em 0 0 0;
+    }
+    @media(min-width: 768px){
+        padding:4.5em 1.0em 0 1.0em;
+    }
+    text-align: center;
+}
+
+
+/*Images of services section and testimonial section*/
+
+#images-of-services{
+    background:$brand-colour-3;
+}
+
+.service-image-container{
+    padding:0;
+    background:$brand-colour-1;
+    overflow: hidden;
+}
+
+.service-title{
+    position:absolute;
+    margin:auto;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    z-index: 101;
+}
+
+.service-title h3{
+    color:$brand-colour-2;
+    font-family:$brand-font-1;
+    @include font-size(2.5);
+}
+
+.background-slide-toggle{
+    background:$brand-colour-3;
+    height:100%;
+    width:0%;
+    position:absolute;
+    z-index:100;
+}
+
+.image-button-toggle-layer{
+    z-index:102;
+    background:white; /*Normally you add tranparent as the value but IE 10 and below treat elements with a transparent background as invisible*/
+    @include opacity(0);
+    height:100%;
+    width:100%;
+    position:absolute;
+}
+
+.cursor-pointer{
+    cursor: pointer;
+}
+
+p.image-content-info{
+    margin:0;
+}
+
+.image-content-info{
+    text-align:justify;
+    font-family: $brand-font-2;
+    @include font-size(1.7);
+    padding:1.0em 2.0em 0 2.0em;
+    display:none;
+}
+
+

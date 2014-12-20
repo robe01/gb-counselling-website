@@ -1,0 +1,31 @@
+footer{
+    padding: 8px 0px 8px 0px;
+    background: $brand-colour-1; 
+    line-height:1.5em;
+    @include font-size(1.4);
+    font-family: $brand-font-1;
+    color: $brand-colour-2;
+}
+
+#design-credit-info{
+    /*Screens larger than extra small*/
+    @media (min-width:768px){
+        text-align:right;
+    }
+    /*Extra Small*/
+    @media (max-width:768px){
+        text-align:center;
+        padding-bottom:0.5em;
+    }
+}
+
+#copy-right-info{
+    @media (max-width:768px){
+        text-align:center;
+        padding:0.5em 0 0.5em 0;
+    }
+}
+
+#design-credit-info a{
+    color: $brand-colour-2;
+}

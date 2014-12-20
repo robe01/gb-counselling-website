@@ -1,0 +1,46 @@
+/*Testimonials Section*/
+
+.publish-date{
+    color:$brand-colour-2;
+    font-family: $brand-font-1;
+    @include font-size(1.7);  
+    display:none;
+}
+
+#testimonial-section-container{
+    background:$brand-colour-3;
+}
+
+a.pagination-buttons{
+    text-decoration:none;
+    color:$brand-colour-2;
+    background:#989898;
+    padding:0 2.5em 0 2.5em;
+    position:absolute;
+    top:1px;
+    z-index:999;
+}
+
+.pagination-buttons .fa-angle-right, .pagination-buttons .fa-angle-left{
+    @include font-size(6.0);
+}
+
+a.pagination-buttons:hover{
+    color:$brand-colour-1;
+    background:silver;
+}
+
+#left-pagination-arrow{
+    left:0;
+}
+
+#right-pagination-arrow{
+    right:0;
+}
+
+.testimonial-quote{
+    padding-top:0.5em;
+    @include font-size(3.0);
+    font-family: $brand-font-1;
+    color:$brand-colour-2;
+}
