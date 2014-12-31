@@ -3,20 +3,7 @@
     ?>
         <main>
             
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12 remove-padding">
-                        <div id="video-container">
-                            <div class="is-table">
-                                <div class="table-cell">
-                                    <p id="video-text"><?php the_block('Video Title Text'); get_the_block('Video Title Text', array('type' => 'one-liner')); ?></p>
-                                </div>
-                            </div>
-                            <a id="video-down-arrow-button" href="#section-one"><i class="fa fa-angle-down"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
             
             <!-- Section 1 -->
             
