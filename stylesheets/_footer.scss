@@ -1,3 +1,22 @@
+
+//Stick footer styling------>
+
+html, 
+body{
+    height:100%;
+}
+
+#container-for-sticky-footer{
+    min-height:100%;
+    position:relative;
+}
+
+main{
+    padding-bottom:2.6em;
+}
+
+//---->
+
 footer{
     padding: 8px 0px 8px 0px;
     background: $brand-colour-1; 
@@ -5,6 +24,9 @@ footer{
     @include font-size(1.4);
     font-family: $brand-font-1;
     color: $brand-colour-2;
+    position:absolute;
+    bottom:0;
+    width:100%;
 }
 
 #design-credit-info{

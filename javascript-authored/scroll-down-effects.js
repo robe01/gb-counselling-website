@@ -5,7 +5,19 @@ var $window = jQuery(window); //Cache the window browser selection
 //A function that sets the element's opacity to zero
 function setElementsOpacityToZero(elementsToSetOpacityToZero){
     elementsToSetOpacityToZero.each(function(){
-        jQuery(this).addClass('scroll-in-opacity');
+        
+        //Check whether the user has already scrolled past an element within the document. 
+        //If so, then don't apply an opacity class to the element so that it isn't animated in on scroll.
+        //This is so that when a user refreshes the website at a particular point in the page, 
+        //elements are not animated in again, as they've already been scrolled past by.
+        
+        var elementPosition = jQuery(this).offset().top; //Get the element's position within the document
+        var webBrowserHeight = $window.innerHeight(); //Get window browser height
+        var distanceBetweenBrowserWindowAndElement = elementPosition - webBrowserHeight;
+        
+        if(distanceBetweenBrowserWindowAndElement > $window.scrollTop()){
+            jQuery(this).addClass('scroll-in-opacity');
+        }
     });
 }
 
@@ -36,11 +48,11 @@ function animateElementOnScrollPosition(animationEffect,selectedElementsToAnimat
 
             $window.on('scroll.'+elementId,function(){
                 if(distanceBetweenBrowserWindowAndElement < $window.scrollTop()){
-                    jQuery("#" + elementId).velocity(animationEffect,duration, function(){
+                    jQuery("#" + elementId).velocity(animationEffect,{duration: duration, queue: false, complete: function(){
                   
                         $this.removeClass('scroll-in-opacity');//Remove the opacity class as the element has now been animated in
                         
-                    });
+                    }});
                     $window.off('.'+elementId);//Remove the event handler
                 }
             });
@@ -60,6 +72,7 @@ function removeOpacityClassOnScrollElements(selectedElements){
 
 
 
+//CALLING OF FUNCTIONS section --->
 
 
 
@@ -72,7 +85,7 @@ var $animateSlideUpIn = jQuery('#personal-img');
 
 
 
-//When the page loads, check whether the screen is larger than 768px
+//When the page loads, check whether its not a mobile phone device
 //if it is, then it's okay to animate elements in on window scrolling
 
 if(!jQuery.browser.mobile){
@@ -94,13 +107,12 @@ if(!jQuery.browser.mobile){
     animateElementOnScrollPosition('transition.slideUpBigIn', $animateSlideUpIn, 1000);
 }
 
-    
 
-
+//Window resize function
 
 $window.resize(function(){
     
-    //If screen is less than 768px in width then remove all scroll events on the window
+    //If screen is a mobile phone device, then remove all scroll events on the window
     //and remove all elements' opacity 0 class that are to be animated on window scroll 
     
     if(jQuery.browser.mobile){

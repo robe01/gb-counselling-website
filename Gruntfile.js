@@ -40,7 +40,7 @@ module.exports = function(grunt) {
             dist: {
                 options: {
                     sassDir: 'stylesheets',
-                    cssDir: '/wamp/www/wordpress/wp-content/themes/gary_baron_counselling',//specify the route of the project
+                    cssDir: './',//specify the route of the project
                     noLineComments: false,
                     outputStyle: 'compressed'
                 }
@@ -59,7 +59,7 @@ module.exports = function(grunt) {
                     'bower_components/velocity/velocity.min.js',
                     'bower_components/velocity/velocity.ui.min.js',
                     'bower_components/blast-text/jquery.blast.min.js',
-                    'bower_components/modernizr/modernizr.js',
+                    'bower_components/modernizr/modernizr.js',          
                     'bower_components/detect-mobile-browser/detectmobilebrowser.js'],
                 tasks: ['concat:javascriptLibraries','uglify:javascriptLibraries']
             },

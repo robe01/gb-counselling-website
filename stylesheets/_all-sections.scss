@@ -126,6 +126,67 @@ p.content-info{
     padding:1.0em 1.0em 1.0em 1.0em;    
 }
 
+.close-cursor{
+    cursor: url(#{$wp-template-url}/custom-icons/close-cursor.ico), default;
+}
 
 
+//Section header images
 
+.section-header-background-1,.section-header-background-2,.section-header-background-3,.section-header-background-4,.section-header-background-5{
+    background-position: center top;
+    background-size: cover;
+}
+
+
+//Ignore the error of the # tag, im using interpolation syntax. Everything will compile correctly into css
+
+@media(min-width:0px) and (max-width:768px){
+    .section-header-background-1{
+        background-image: url(#{$wp-template-url}/images/section-1-image-header-780.jpg);
+    }
+    .section-header-background-2{
+        background-image: url(#{$wp-template-url}/images/section-2-image-header-780.jpg);
+    }
+    .section-header-background-4{
+        background-image: url(#{$wp-template-url}/images/section-4-image-header-780.jpg);
+    }
+    .section-header-background-5{
+        background-image: url(#{$wp-template-url}/images/section-5-image-header-780.jpg);
+    }
+}
+
+@media(min-width:769px) and (max-width:1199px){
+    .section-header-background-1{
+        background-image: url(#{$wp-template-url}/images/section-1-image-header-1200.jpg);
+    }
+    .section-header-background-2{
+        background-image: url(#{$wp-template-url}/images/section-2-image-header-1200.jpg);
+    }
+    .section-header-background-4{
+        background-image: url(#{$wp-template-url}/images/section-4-image-header-1200.jpg);
+    }
+    .section-header-background-5{
+        background-image: url(#{$wp-template-url}/images/section-5-image-header-1200.jpg);
+    }
+}
+
+@media(min-width:1200px){
+    .section-header-background-1{
+        background-image: url(#{$wp-template-url}/images/section-1-image-header-2010.jpg);
+    }
+    .section-header-background-2{
+        background-image: url(#{$wp-template-url}/images/section-2-image-header-2010.jpg);
+    }
+    .section-header-background-4{
+        background-image: url(#{$wp-template-url}/images/section-4-image-header-2010.jpg);
+    }
+    .section-header-background-5{
+        background-image: url(#{$wp-template-url}/images/section-5-image-header-2010.jpg);
+    }
+}
+
+
+.section-header-background-3{
+    background-image: url(#{$wp-template-url}/images/section-3-image-header-2010.jpg);
+}

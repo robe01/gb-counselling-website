@@ -1,6 +1,15 @@
 
-//Function for responsive video height
+//Function for a responsive page height in regards to the fixed header
+function responsivePageHeight(){
 
+    //Header height
+    var headerHeight = jQuery('#header-info-container').outerHeight();
+
+    //Push the main content down based on the size of the header element
+    jQuery('main').css('margin-top',headerHeight);  
+}
+
+//Function for responsive video height
 function responsiveVideoHeight(){
 
     //Web browser height
@@ -12,18 +21,18 @@ function responsiveVideoHeight(){
     //Video height
     var viewportMinusHeaderHeight = viewportHeight - headerHeight;
 
-    jQuery('#video-container').outerHeight(viewportMinusHeaderHeight);
-
-    //Push the video below so that it doesn't get overlapped by the header
-    jQuery('#video-container').css('margin-top',headerHeight);   
+    jQuery('#video-container').outerHeight(viewportMinusHeaderHeight);  
 }
 
 //Run function striaght away
 responsiveVideoHeight();
+responsivePageHeight();
 
-//Change the video height based on screen resize
+
+//Change the video height and document height based on screen resize
 jQuery(window).resize(function(){
     responsiveVideoHeight();
+    responsivePageHeight();
 });
 
 
@@ -51,13 +60,14 @@ if(!jQuery.browser.mobile){
         delimiter: 'word' 
     });
 
-    jQuery('.blast').velocity('transition.slideDownIn',{ stagger: 350, complete: function(){
+    jQuery('.blast').velocity('transition.slideDownIn',{ stagger: 350, queue: false, complete: function(){
 
         //Fade down the button when the page loads
-        $videoDownButton.delay(250).velocity('transition.slideUpBigIn', 1000, function(){
+        $videoDownButton.velocity('transition.slideUpBigIn', 1000, function(){
             animateVideoDownArrow($videoDownButton,900);
         });
     }});
+    
 }
 
 
@@ -135,12 +145,12 @@ jQuery('#cancel-header-navigation-icon').on('click', function(){
 function imageButtonToggleHoverEventHandlerAssign(selector){
     jQuery(selector).on('mouseover', function(){
         jQuery(this).siblings('img').css('opacity', '0.5');
-        jQuery(this).siblings('img').velocity("stop").velocity({scale: 1.25},'fast');
+        jQuery(this).siblings('img').velocity("stop").velocity({scale: 1.25},{duration: 'fast', queue: false});
     });
 
     jQuery(selector).on('mouseout', function(){
         jQuery(this).siblings('img').css('opacity', '1');
-        jQuery(this).siblings('img').velocity("stop").velocity({scale: 1.0},'fast');
+        jQuery(this).siblings('img').velocity("stop").velocity({scale: 1.0},{duration: 'fast', queue: false});
     });
 }
 
@@ -161,17 +171,17 @@ function imageButtonToggleClickEventHandlerAssign(selector){
             jQuery(this).addClass('close-cursor');
             jQuery(this).siblings('.service-title').find('.is-table > .table-cell > .testimonial-quote').hide();
             jQuery(this).siblings('.service-title').find('.is-table > .table-cell > .publish-date').show();
-            jQuery(this).siblings('.background-slide-toggle').velocity("stop").velocity({width: 100+'%'},250,function(){
-                jQuery(this).siblings('.service-title').find('.is-table > .table-cell > .image-content-info').velocity("stop").velocity('transition.slideUpBigIn',400); 
-            });
+            jQuery(this).siblings('.background-slide-toggle').velocity("stop").velocity({width: 100+'%'}, {duration: 250, queue: false, complete: function(){
+                jQuery(this).siblings('.service-title').find('.is-table > .table-cell > .image-content-info').velocity("stop").velocity('transition.slideUpBigIn',400);
+            }});
         }
         else if(jQuery(this).attr('data-image-button-toggle-layer') === 'on'){
             jQuery(this).attr('data-image-button-toggle-layer','off');
             jQuery(this).siblings('.service-title').find('.is-table > .table-cell > .image-content-info').velocity("stop").velocity('transition.slideDownBigOut', { duration: 400, complete: function(){
-                jQuery(this).parents('.service-title').siblings('.background-slide-toggle').velocity("stop").velocity({width: 0+'%'},250, function(){
+                jQuery(this).parents('.service-title').siblings('.background-slide-toggle').velocity("stop").velocity({width: 0+'%'}, {duration: 250, queue: false, complete: function(){
                     jQuery(this).siblings('.service-title').find('.is-table > .table-cell > .testimonial-quote').show();
                     jQuery(this).siblings('.service-title').find('.is-table > .table-cell > .publish-date').hide(); 
-                });
+                }});
                 jQuery(this).parents('.service-title').siblings('.image-button-toggle-layer').addClass('cursor-pointer');
             }}); 
         }
@@ -190,7 +200,19 @@ var $window = jQuery(window); //Cache the window browser selection
 //A function that sets the element's opacity to zero
 function setElementsOpacityToZero(elementsToSetOpacityToZero){
     elementsToSetOpacityToZero.each(function(){
-        jQuery(this).addClass('scroll-in-opacity');
+        
+        //Check whether the user has already scrolled past an element within the document. 
+        //If so, then don't apply an opacity class to the element so that it isn't animated in on scroll.
+        //This is so that when a user refreshes the website at a particular point in the page, 
+        //elements are not animated in again, as they've already been scrolled past by.
+        
+        var elementPosition = jQuery(this).offset().top; //Get the element's position within the document
+        var webBrowserHeight = $window.innerHeight(); //Get window browser height
+        var distanceBetweenBrowserWindowAndElement = elementPosition - webBrowserHeight;
+        
+        if(distanceBetweenBrowserWindowAndElement > $window.scrollTop()){
+            jQuery(this).addClass('scroll-in-opacity');
+        }
     });
 }
 
@@ -221,11 +243,11 @@ function animateElementOnScrollPosition(animationEffect,selectedElementsToAnimat
 
             $window.on('scroll.'+elementId,function(){
                 if(distanceBetweenBrowserWindowAndElement < $window.scrollTop()){
-                    jQuery("#" + elementId).velocity(animationEffect,duration, function(){
+                    jQuery("#" + elementId).velocity(animationEffect,{duration: duration, queue: false, complete: function(){
                   
                         $this.removeClass('scroll-in-opacity');//Remove the opacity class as the element has now been animated in
                         
-                    });
+                    }});
                     $window.off('.'+elementId);//Remove the event handler
                 }
             });
@@ -245,6 +267,7 @@ function removeOpacityClassOnScrollElements(selectedElements){
 
 
 
+//CALLING OF FUNCTIONS section --->
 
 
 
@@ -257,7 +280,7 @@ var $animateSlideUpIn = jQuery('#personal-img');
 
 
 
-//When the page loads, check whether the screen is larger than 768px
+//When the page loads, check whether its not a mobile phone device
 //if it is, then it's okay to animate elements in on window scrolling
 
 if(!jQuery.browser.mobile){
@@ -279,13 +302,12 @@ if(!jQuery.browser.mobile){
     animateElementOnScrollPosition('transition.slideUpBigIn', $animateSlideUpIn, 1000);
 }
 
-    
 
-
+//Window resize function
 
 $window.resize(function(){
     
-    //If screen is less than 768px in width then remove all scroll events on the window
+    //If screen is a mobile phone device, then remove all scroll events on the window
     //and remove all elements' opacity 0 class that are to be animated on window scroll 
     
     if(jQuery.browser.mobile){

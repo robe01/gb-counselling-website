@@ -1,6 +1,15 @@
 
-//Function for responsive video height
+//Function for a responsive page height in regards to the fixed header
+function responsivePageHeight(){
 
+    //Header height
+    var headerHeight = jQuery('#header-info-container').outerHeight();
+
+    //Push the main content down based on the size of the header element
+    jQuery('main').css('margin-top',headerHeight);  
+}
+
+//Function for responsive video height
 function responsiveVideoHeight(){
 
     //Web browser height
@@ -12,18 +21,18 @@ function responsiveVideoHeight(){
     //Video height
     var viewportMinusHeaderHeight = viewportHeight - headerHeight;
 
-    jQuery('#video-container').outerHeight(viewportMinusHeaderHeight);
-
-    //Push the video below so that it doesn't get overlapped by the header
-    jQuery('#video-container').css('margin-top',headerHeight);   
+    jQuery('#video-container').outerHeight(viewportMinusHeaderHeight);  
 }
 
 //Run function striaght away
 responsiveVideoHeight();
+responsivePageHeight();
 
-//Change the video height based on screen resize
+
+//Change the video height and document height based on screen resize
 jQuery(window).resize(function(){
     responsiveVideoHeight();
+    responsivePageHeight();
 });
 
 
@@ -51,12 +60,13 @@ if(!jQuery.browser.mobile){
         delimiter: 'word' 
     });
 
-    jQuery('.blast').velocity('transition.slideDownIn',{ stagger: 350, complete: function(){
+    jQuery('.blast').velocity('transition.slideDownIn',{ stagger: 350, queue: false, complete: function(){
 
         //Fade down the button when the page loads
-        $videoDownButton.delay(250).velocity('transition.slideUpBigIn', 1000, function(){
+        $videoDownButton.velocity('transition.slideUpBigIn', 1000, function(){
             animateVideoDownArrow($videoDownButton,900);
         });
     }});
+    
 }
 

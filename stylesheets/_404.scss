@@ -1,0 +1,14 @@
+#four-o-four-section{
+    height:90%;
+    width:100%;
+    position:absolute;
+}
+
+#four-o-four-section p{
+    font-family:$brand-font-2;
+    @include font-size(1.7);
+}
+
+#four-o-four-section h1{
+    font-family:$brand-font-1;
+}
