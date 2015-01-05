@@ -23,7 +23,21 @@
             </script>
 
             <!-- Authored JavaScript Minified -->
-            <script src="<?php bloginfo('template_url'); ?>/javascript-authored-minified/javascript.min.js"></script>
+            <!-- build:remove -->
+            <script src="<?php bloginfo('template_url'); ?>/javascript-authored/video.js"></script>
+            <script src="<?php bloginfo('template_url'); ?>/javascript-authored/scroll-to-links.js"></script>
+            <script src="<?php bloginfo('template_url'); ?>/javascript-authored/horizontal-menu.js"></script>
+            <script src="<?php bloginfo('template_url'); ?>/javascript-authored/image-button-effect.js"></script>
+            <script src="<?php bloginfo('template_url'); ?>/javascript-authored/scroll-down-effects.js"></script>
+            <script src="<?php bloginfo('template_url'); ?>/javascript-authored/pagination-buttons.js"></script>
+            <script src="<?php bloginfo('template_url'); ?>/javascript-authored/panel-collapse-toggle.js"></script>
+            <script src="<?php bloginfo('template_url'); ?>/javascript-authored/google-maps.js"></script>
+            <!-- /build -->
+            
+            <!-- build:template
+                <%= javascript_authored %>
+            /build -->
+            
         </div>
     <?php wp_footer(); ?>
     </body>

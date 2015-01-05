@@ -22,17 +22,25 @@
         <link rel="profile" href="http://gmpg.org/xfn/11">
         <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>">
         
-        <!-- Twitter Bootstrap CSS -->
+        <!-- Style sheets -->
         <link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/bootstrap/css/bootstrap.min.css" media="screen" />
-
-        <!-- Font Awesome Icons -->
         <link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/bower_components/fontawesome/css/font-awesome.min.css" />
-        
-        <!-- Style Sheet -->
         <link rel="stylesheet" href="<?php echo get_stylesheet_uri(); ?>" media="screen" />
+
         
         <!-- JavaScript Libraries-->
-        <script src="<?php bloginfo('template_url'); ?>/javascript-libs-minified/javascriptLibs.min.js"></script>
+        <!-- build:remove -->
+        <script src="<?php bloginfo('template_url'); ?>/bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="<?php bloginfo('template_url'); ?>/bower_components/velocity/velocity.min.js"></script>
+        <script src="<?php bloginfo('template_url'); ?>/bower_components/velocity/velocity.ui.min.js"></script>
+        <script src="<?php bloginfo('template_url'); ?>/bower_components/blast-text/jquery.blast.min.js"></script>
+        <script src="<?php bloginfo('template_url'); ?>/bower_components/modernizr/modernizr.js"></script>
+        <script src="<?php bloginfo('template_url'); ?>/bower_components/detect-mobile-browser/detectmobilebrowser.js"></script>
+        <!-- /build -->
+        
+        <!-- build:template
+            <%= javascript_libs %>
+        /build -->
         
         <!-- Google Maps API Key -->
         <!--<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA_SqQ1jC2XCd-NuCxCgSNuq3Cxv6QVf8s&sensor=false"></script>-->
