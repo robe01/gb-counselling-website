@@ -26,21 +26,18 @@
         <link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/bootstrap/css/bootstrap.min.css" media="screen" />
         <link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/bower_components/fontawesome/css/font-awesome.min.css" />
         <link rel="stylesheet" href="<?php echo get_stylesheet_uri(); ?>" media="screen" />
-
         
         <!-- JavaScript Libraries-->
-        <!-- build:remove -->
-        <script src="<?php bloginfo('template_url'); ?>/bower_components/jquery/dist/jquery.min.js"></script>
-        <script src="<?php bloginfo('template_url'); ?>/bower_components/velocity/velocity.min.js"></script>
-        <script src="<?php bloginfo('template_url'); ?>/bower_components/velocity/velocity.ui.min.js"></script>
-        <script src="<?php bloginfo('template_url'); ?>/bower_components/blast-text/jquery.blast.min.js"></script>
-        <script src="<?php bloginfo('template_url'); ?>/bower_components/modernizr/modernizr.js"></script>
-        <script src="<?php bloginfo('template_url'); ?>/bower_components/detect-mobile-browser/detectmobilebrowser.js"></script>
-        <!-- /build -->
         
-        <!-- build:template
-            <%= javascript_libs %>
-        /build -->
+        <!-- build:js javascript/libs/libs-js.min.js -->
+        <script src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="bower_components/velocity/velocity.min.js"></script>
+        <script src="bower_components/velocity/velocity.ui.min.js"></script>
+        <script src="bower_components/blast-text/jquery.blast.min.js"></script>
+        <script src="bower_components/modernizr/modernizr.js"></script>
+        <script src="bower_components/detect-mobile-browser/detectmobilebrowser.js"></script>
+        <!-- endbuild -->
+        
         
         <!-- Google Maps API Key -->
         <!--<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA_SqQ1jC2XCd-NuCxCgSNuq3Cxv6QVf8s&sensor=false"></script>-->

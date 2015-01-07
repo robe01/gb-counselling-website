@@ -13,11 +13,22 @@ module.exports = function(grunt){
     //YOU CAN DO THIS BY USING YOUR TEXT EDITORS SEARCH AND REPLACE FEATURES.
     var dest_folder_name = 'wp_template_dest';
    
+   
+    // Configurable paths
+    var config = {
+        sass_wp_template_url: "$wp-template-url: 'http://127.0.0.1:8080/wordpress/wp-content/themes/wp_template_dest';",
+        dist: 'wp_template_dest'
+    };
+   
+   
     //------------------------------------------------------------------------------------------------------------------->
 
     grunt.initConfig({
         
         pkg: grunt.file.readJSON('package.json'),
+        
+        // Project settings
+        config: config,
         
         compass: { //A SASS library. This plugin comes with sass, so no need to install a grunt sass plugin aswell.
             dev: {
@@ -133,6 +144,42 @@ module.exports = function(grunt){
             removeStyleSheets: {
                 src: [dest_folder_name + "/stylesheets"]
             }
+        },
+        sync: {
+            main: {
+                files: [{
+                    src: ['**/*', '!node_modules/**', '!nbproject/**', '!style.css', '!javascript-authored/**', '!bower_components/**', 'bower_components/fontawesome/**/*', 'bower_components/respond-minmax/**/*', 'bower_components/html5shiv/**/*', '!Gruntfile.js', '!package.json', '!bower.json'],
+                    dest: dest_folder_name
+                }],
+                pretend: true, // Don't do any IO. Before you run the task with `updateAndDelete` PLEASE MAKE SURE it doesn't remove too much.
+                verbose: true, // Display log messages when copying files
+                updateAndDelete: true
+            }
+        },
+        
+        
+        useminPrepare: {
+            html: ['*.php'],
+            options: {
+                dest: '<%= config.dist %>'
+            }
+        },       
+        
+        
+        
+        
+        
+        
+        //Update files that have been useminPrepared. 
+        usemin: {
+            html: '<%= config.dist %>/*.php',
+            options: {
+                blockReplacements: {
+                    js: function(block){
+                        return '<script src="<?php bloginfo(\'template_url\'); ?>/' + block.dest + '"></script>';
+                    }
+                }
+            }
         }
         
     });
@@ -151,13 +198,24 @@ module.exports = function(grunt){
     grunt.loadNpmTasks('grunt-processhtml'); //Change html files. Used for changing directory paths for stylesheets and javascript in build environment.
     grunt.loadNpmTasks('grunt-contrib-clean'); //Delete folders and files
     grunt.loadNpmTasks('grunt-sync');
+    grunt.loadNpmTasks('grunt-usemin');
 
     // 4. Where we tell Grunt what to do when we type "grunt" into the terminal.
     
     grunt.registerTask('default', ['watch']);
-    grunt.registerTask('sync_deploy', ['sync']);
+    //grunt.registerTask('sync_deploy', ['sync']);
+
+    
     
     grunt.registerTask('deploy_build', [
+        'useminPrepare',
+        'concat:generated',
+        'uglify:generated',
+        'usemin'
+    ]);
+    
+    
+    /*grunt.registerTask('deploy_build_now', [
         'copy:build_dest_folder',
         'processhtml:configSassWpTemplateUrl',
         'compass:dest',
@@ -167,4 +225,7 @@ module.exports = function(grunt){
         'uglify:javascriptLibraries',
         'clean:removeStyleSheets', 
         'processhtml:build']);
+    };*/
+    
+    
 };

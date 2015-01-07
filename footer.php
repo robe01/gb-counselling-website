@@ -23,7 +23,8 @@
             </script>
 
             <!-- Authored JavaScript Minified -->
-            <!-- build:remove -->
+            
+            <!-- build:js javascript/authored/authored-js.min.js -->
             <script src="<?php bloginfo('template_url'); ?>/javascript-authored/video.js"></script>
             <script src="<?php bloginfo('template_url'); ?>/javascript-authored/scroll-to-links.js"></script>
             <script src="<?php bloginfo('template_url'); ?>/javascript-authored/horizontal-menu.js"></script>
@@ -32,11 +33,8 @@
             <script src="<?php bloginfo('template_url'); ?>/javascript-authored/pagination-buttons.js"></script>
             <script src="<?php bloginfo('template_url'); ?>/javascript-authored/panel-collapse-toggle.js"></script>
             <script src="<?php bloginfo('template_url'); ?>/javascript-authored/google-maps.js"></script>
-            <!-- /build -->
-            
-            <!-- build:template
-                <%= javascript_authored %>
-            /build -->
+            <!-- endbuild -->
+
             
         </div>
     <?php wp_footer(); ?>
