@@ -1,25 +1,17 @@
 module.exports = function(grunt){
-
-    //CHANGE THESE VARIABLES WHEN DEPLOYING A BUILD OF THIS PROJECT ------------------------------------------------------>
-    
-    //Change this variable to the URL of the website this template will be distributed on.
-    //This url will be used in SASS files as a URL reference for various style properties. For example, in the url value of a background image property - background-image:url( URL WOULD BE INSERTED HERE);.
-    //This variable is dynamically injected in via the grunt task 'processhtml:configSassWpTemplateUrl', which you can look at below, in this file. 
-    var sass_wp_template_url = "$wp-template-url: 'http://127.0.0.1:8080/wordpress/wp-content/themes/wp_template_dest';";
-    
-    
-    //Change this variable to the name you wish to give to the dest folder. This name will be the wordpress template name.
-    //YOU MUST ALSO CHANGE ALL 'wp_template_dest' PATHS TO THE NAME YOU'VE GIVEN IN THE 'dest_folder_name' VARIABLE BELOW.
-    //YOU CAN DO THIS BY USING YOUR TEXT EDITORS SEARCH AND REPLACE FEATURES.
-    var dest_folder_name = 'wp_template_dest';
    
-   
-    // Configurable paths
+    //CHANGE THESE GLOBAL CONFIG VARIABLES NOW. CHANGE THEM EVERYTIME YOU USE THIS WP TEMPLATE FOR A DIFFERENT PROJECT ------------------------------------------------------>
+    
     var config = {
+    
+        //Change this variable to the URL of the website this template will be distributed on.
+        //This url will be used in SASS files as a URL reference for various style properties. For example, in the url value of a background image property - background-image:url( URL WOULD BE INSERTED HERE);.
+        //This variable is dynamically injected in via the grunt task 'processhtml:configSassWpTemplateUrl', which you can look at far below in this file. 
         sass_wp_template_url: "$wp-template-url: 'http://127.0.0.1:8080/wordpress/wp-content/themes/wp_template_dest';",
+        
+        //Change this variable to the name you wish to give to the dist folder. This name should be the wordpress template name.
         dist: 'wp_template_dest'
     };
-   
    
     //------------------------------------------------------------------------------------------------------------------->
 
@@ -27,10 +19,14 @@ module.exports = function(grunt){
         
         pkg: grunt.file.readJSON('package.json'),
         
-        // Project settings
+        //The global config variables that were previously made, 
+        //have been declared here.
         config: config,
         
-        compass: { //A SASS library. This plugin comes with sass, so no need to install a grunt sass plugin aswell.
+        //A SASS library. This plugin comes with sass, so no need to install 
+        //a grunt sass plugin aswell. 
+        //THIS PLUGIN DOES REQUIRE AN ACTUAL DOWNLOAD OF RUBY, SASS AND COMPASS.  
+        compass: {
             dev: {
                 options: {
                     sassDir: 'stylesheets',
@@ -39,136 +35,110 @@ module.exports = function(grunt){
                     outputStyle: 'compressed'
                 }
             },
-            dest: {
+            
+            //Compile SASS and distribute only the style.css file to the dist 
+            //folder. This task is run to specifically compile style.css due 
+            //to a certain variable being changed in config.scss.
+            dist: {
                 options: {
-                    sassDir: dest_folder_name + '/stylesheets',
-                    cssDir: dest_folder_name, //specify the route of the project to emit the compiled css files
+                    sassDir: '<%= config.dist %>/stylesheets',
+                    cssDir: '<%= config.dist %>', //specify the route of the project to emit the compiled style.css file
                     noLineComments: false,
                     outputStyle: 'compressed'
                 }
             }
         },
-        sprite: { // Image spriting. If this plugin is used, the computer will need a download of graphics magick software in the execution path.
+        
+        //Image spriting. If this plugin is used the computer running this 
+        //gruntfile will need a download of 'graphics magick' software in the 
+        //execution path.
+        sprite: {
             all: {
-                src: ['images/sprites/*.jpg'],
+                src: 'images/sprites/*.jpg',
                 destImg: 'images/sprites/spritesheet/spritesheet.jpg',
                 destCSS: 'stylesheets/sprites.css',
                 engine: 'gm',
                 algorithm: 'left-right'
             }
         },
-        watch: { //Watch the project for changes to any sass, html, php and javascript files.
+        
+        //Watch the project for changes to any sass, html, php and javascript files.
+        watch: { 
             options: {
                 livereload: true
             },
             compass: {
-                files: ['stylesheets/**/*.scss'], //Any changes to SASS files will trigger the task and reload the browser.
-                tasks: ['compass:dev']
+                files: 'stylesheets/**/*.scss', //Any changes to SASS files will trigger the task and reload the browser.
+                tasks: 'compass:dev'
             },
             htmlAndPhpFileChanges: { //Reload the browser for any changes to PHP or HTML files in the root directory. Add other file extensions aswell if I need them.
-                files: ['*.php','*.html']
+                files: '*{.php,.html}'
             },
             authoredJavascriptFilesChanged: { //Reload the browser for any changes to athored javascript files.
-                files: ['javascript-authored/*.js']
+                files: 'javascript-authored/*.js'
             },
-            newBowerFiles: { //Reload the browser for any changes to bower files or adding of new files.
-                files: ['bower_components/**/*']
+            newBowerFiles: { //Reload the browser for any changes to bower files or adding of new bower files.
+                files: 'bower_components/**/*'
             },
             gruntFileJs: { //Watch gruntfile.js so that it can reload itself if changes are made to the file when running the 'watch' task.
-                files: ['Gruntfile.js']
+                files: 'Gruntfile.js'
             }
         },
-        copy: { 
-            build_dest_folder: { //Copy folders apart from some and move it to the new dest folder
-                src: ['**/*', '!node_modules/**', '!nbproject/**', '!style.css', '!javascript-authored/**', '!bower_components/**', 'bower_components/fontawesome/**/*', 'bower_components/respond-minmax/**/*', 'bower_components/html5shiv/**/*', '!Gruntfile.js', '!package.json', '!bower.json'],
-                dest: dest_folder_name + '/'
-            }
-        },
-        concat: { //Put all javascript files together. Must be in a certain order, hence why I have'nt selected all the files
-            authoredJavascript: {
-                src: ['javascript-authored/video.js',
-                    'javascript-authored/scroll-to-links.js',
-                    'javascript-authored/horizontal-menu.js',
-                    'javascript-authored/image-button-effect.js',
-                    'javascript-authored/scroll-down-effects.js',
-                    'javascript-authored/pagination-buttons.js',
-                    'javascript-authored/panel-collapse-toggle.js',
-                    'javascript-authored/google-maps.js'],
-                dest: dest_folder_name + '/javascript-authored-minified/javascript.js'
-            },
-            javascriptLibraries: {
-                src: ['bower_components/jquery/dist/jquery.min.js',
-                    'bower_components/velocity/velocity.min.js',
-                    'bower_components/velocity/velocity.ui.min.js',
-                    'bower_components/blast-text/jquery.blast.min.js',
-                    'bower_components/modernizr/modernizr.js',
-                    'bower_components/detect-mobile-browser/detectmobilebrowser.js'],
-                dest: dest_folder_name + '/javascript-libs-minified/javascriptLibs.js'
-            }
-        },
-        uglify: { //Minify files
-            authoredJavascript: {
-                src: dest_folder_name + '/javascript-authored-minified/javascript.js',
-                dest: dest_folder_name + '/javascript-authored-minified/javascript.min.js'
-            },
-            javascriptLibraries: {
-                src: dest_folder_name + '/javascript-libs-minified/javascriptLibs.js',
-                dest: dest_folder_name + '/javascript-libs-minified/javascriptLibs.min.js'
-            }
-        },
-        processhtml: {//Put all stylesheet files in 1 request call link, all javascript authored files in 1 request call link and all javascript library files in 1 request call link.
-            build: {
-                options: {
-                    data: {
-                        javascript_libs: '<script src="<?php bloginfo(\'template_url\'); ?>/javascript-libs-minified/javascriptLibs.min.js"></script>',
-                        javascript_authored: '<script src="<?php bloginfo(\'template_url\'); ?>/javascript-authored-minified/javascript.min.js"></script>'
-                    }
-                },
-                files: {
-                    'wp_template_dest/header.php' : [dest_folder_name + '/header.php'],
-                    'wp_template_dest/footer.php' : [dest_folder_name + '/footer.php']
-                }
-            },
+        
+        //Changes the SASS variable 'wp_template_url' in config.scss to the URL
+        //of the web server this wordpress template theme is to be distributed on
+        processhtml: {
             configSassWpTemplateUrl: {
                 options: {
                     data: {
-                        wp_template_url: sass_wp_template_url
+                        wp_template_url: '<%= config.sass_wp_template_url %>'
                     }
                 },
                 files: {
-                    'wp_template_dest/stylesheets/configuration/_config.scss' : [dest_folder_name + '/stylesheets/configuration/_config.scss']
+                    '<%= config.dist %>/stylesheets/configuration/_config.scss' : '<%= config.dist %>/stylesheets/configuration/_config.scss'
                 }
             }
         },
+        
+        //Delete stylesheets and dist folder at specific points in the 'deploy_build' task
         clean: {
-            removeStyleSheets: {
-                src: [dest_folder_name + "/stylesheets"]
-            }
-        },
-        sync: {
-            main: {
-                files: [{
-                    src: ['**/*', '!node_modules/**', '!nbproject/**', '!style.css', '!javascript-authored/**', '!bower_components/**', 'bower_components/fontawesome/**/*', 'bower_components/respond-minmax/**/*', 'bower_components/html5shiv/**/*', '!Gruntfile.js', '!package.json', '!bower.json'],
-                    dest: dest_folder_name
-                }],
-                pretend: true, // Don't do any IO. Before you run the task with `updateAndDelete` PLEASE MAKE SURE it doesn't remove too much.
-                verbose: true, // Display log messages when copying files
-                updateAndDelete: true
+            styleSheets: {
+                src: '<%= config.dist %>/stylesheets'
+            },
+            dist: {
+                src: '<%= config.dist %>'
             }
         },
         
-        
+        //Dynamically concat and minify javascript or css files, based on the specified comment blocks in the files.
         useminPrepare: {
-            html: ['*.php'],
+            html: '*.php',
             options: {
-                dest: '<%= config.dist %>'
+                dest: '<%= config.dist %>/'
             }
         },       
         
-        
-        
-        
-        
+        //Create dist directory by copying wanted files from production (aka root) folder
+        copy: { 
+            //Copy folders apart from some and move it to the new dist folder
+            dist: {
+                src: [
+                    '**/*', 
+                    '!node_modules/**',
+                    '!nbproject/**',
+                    '!style.css',
+                    '!javascript-authored/**',
+                    '!bower_components/**',
+                    'bower_components/fontawesome/**/*',
+                    'bower_components/respond-minmax/**/*',
+                    'bower_components/html5shiv/**/*',
+                    '!Gruntfile.js',
+                    '!package.json',
+                    '!bower.json'
+                ],
+                dest: '<%= config.dist %>/'
+            }
+        },
         
         //Update files that have been useminPrepared. 
         usemin: {
@@ -186,46 +156,34 @@ module.exports = function(grunt){
     
     // 3. Where we tell Grunt we plan to use this plug-in.
     
-    grunt.loadNpmTasks('grunt-contrib-concat'); //CSS minify
+    grunt.loadNpmTasks('grunt-contrib-concat'); //Javascript concat
     grunt.loadNpmTasks('grunt-contrib-uglify'); //JavaScript minify
     grunt.loadNpmTasks('grunt-contrib-watch'); //Watches the project for changes to run various tasks.
-    grunt.loadNpmTasks('grunt-contrib-compass'); //A SASS library
-    grunt.loadNpmTasks('grunt-spritesmith'); //If used, the computer will need a download of graphics magick software installed in the execution path.
+    grunt.loadNpmTasks('grunt-contrib-compass'); //A SASS library. If used, the computer will need a download of Ruby, SASS and COMPASS. 
+    grunt.loadNpmTasks('grunt-spritesmith'); //If used, the computer will need a download of 'graphics magick software' installed in the execution path.
     grunt.loadNpmTasks('grunt-notify'); //JS notification
     grunt.loadNpmTasks('grunt-newer'); //Run tasks on files that have been modified 
     grunt.loadNpmTasks('grunt-contrib-copy'); //Copy files. Use mainly for creating a dist folder for a site
     grunt.loadNpmTasks('grunt-contrib-cssmin'); //Minifies css.
     grunt.loadNpmTasks('grunt-processhtml'); //Change html files. Used for changing directory paths for stylesheets and javascript in build environment.
     grunt.loadNpmTasks('grunt-contrib-clean'); //Delete folders and files
-    grunt.loadNpmTasks('grunt-sync');
     grunt.loadNpmTasks('grunt-usemin');
+    
 
     // 4. Where we tell Grunt what to do when we type "grunt" into the terminal.
     
     grunt.registerTask('default', ['watch']);
-    //grunt.registerTask('sync_deploy', ['sync']);
-
-    
     
     grunt.registerTask('deploy_build', [
-        'useminPrepare',
-        'concat:generated',
-        'uglify:generated',
-        'usemin'
+        'clean:dist', //Delete any existing dist folders.
+        'copy:dist', //Copy folders to create a dist folder
+        'useminPrepare', //Prepare minification processes
+        'concat:generated', //Concat javascript
+        'uglify:generated', //Minify javascript
+        'processhtml:configSassWpTemplateUrl', //Change sass config's manually input WORDPRESS URL
+        'compass:dist', //Compile SASS library compass to create style.css with newly added wordpress url
+        'clean:styleSheets', //Delete stylesheets
+        'usemin' //Put references in files that are needed to be linked to previously concatenated and minified files.
     ]);
-    
-    
-    /*grunt.registerTask('deploy_build_now', [
-        'copy:build_dest_folder',
-        'processhtml:configSassWpTemplateUrl',
-        'compass:dest',
-        'concat:authoredJavascript',
-        'concat:javascriptLibraries',
-        'uglify:authoredJavascript',
-        'uglify:javascriptLibraries',
-        'clean:removeStyleSheets', 
-        'processhtml:build']);
-    };*/
-    
     
 };

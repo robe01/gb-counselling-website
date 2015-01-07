@@ -28,7 +28,6 @@
         <link rel="stylesheet" href="<?php echo get_stylesheet_uri(); ?>" media="screen" />
         
         <!-- JavaScript Libraries-->
-        
         <!-- build:js javascript/libs/libs-js.min.js -->
         <script src="bower_components/jquery/dist/jquery.min.js"></script>
         <script src="bower_components/velocity/velocity.min.js"></script>
@@ -37,7 +36,6 @@
         <script src="bower_components/modernizr/modernizr.js"></script>
         <script src="bower_components/detect-mobile-browser/detectmobilebrowser.js"></script>
         <!-- endbuild -->
-        
         
         <!-- Google Maps API Key -->
         <!--<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA_SqQ1jC2XCd-NuCxCgSNuq3Cxv6QVf8s&sensor=false"></script>-->
