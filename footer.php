@@ -24,14 +24,14 @@
 
             <!-- Authored JavaScript Minified -->
             <!-- build:js javascript/authored/authored-js.min.js -->
-            <script src="<?php bloginfo('template_url'); ?>/javascript-authored/video.js"></script>
-            <script src="<?php bloginfo('template_url'); ?>/javascript-authored/scroll-to-links.js"></script>
-            <script src="<?php bloginfo('template_url'); ?>/javascript-authored/horizontal-menu.js"></script>
-            <script src="<?php bloginfo('template_url'); ?>/javascript-authored/image-button-effect.js"></script>
-            <script src="<?php bloginfo('template_url'); ?>/javascript-authored/scroll-down-effects.js"></script>
-            <script src="<?php bloginfo('template_url'); ?>/javascript-authored/pagination-buttons.js"></script>
-            <script src="<?php bloginfo('template_url'); ?>/javascript-authored/panel-collapse-toggle.js"></script>
-            <script src="<?php bloginfo('template_url'); ?>/javascript-authored/google-maps.js"></script>
+            <script data="grunt-js-replace-plugin-remove-wp-bloginfo" src="<?php bloginfo('template_url'); ?>/javascript-authored/video.js"></script>
+            <script data="grunt-js-replace-plugin-remove-wp-bloginfo" src="<?php bloginfo('template_url'); ?>/javascript-authored/scroll-to-links.js"></script>
+            <script data="grunt-js-replace-plugin-remove-wp-bloginfo" src="<?php bloginfo('template_url'); ?>/javascript-authored/horizontal-menu.js"></script>
+            <script data="grunt-js-replace-plugin-remove-wp-bloginfo" src="<?php bloginfo('template_url'); ?>/javascript-authored/image-button-effect.js"></script>
+            <script data="grunt-js-replace-plugin-remove-wp-bloginfo" src="<?php bloginfo('template_url'); ?>/javascript-authored/scroll-down-effects.js"></script>
+            <script data="grunt-js-replace-plugin-remove-wp-bloginfo" src="<?php bloginfo('template_url'); ?>/javascript-authored/pagination-buttons.js"></script>
+            <script data="grunt-js-replace-plugin-remove-wp-bloginfo" src="<?php bloginfo('template_url'); ?>/javascript-authored/panel-collapse-toggle.js"></script>
+            <script data="grunt-js-replace-plugin-remove-wp-bloginfo" src="<?php bloginfo('template_url'); ?>/javascript-authored/google-maps.js"></script>
             <!-- endbuild -->
         </div>
     <?php wp_footer(); ?>

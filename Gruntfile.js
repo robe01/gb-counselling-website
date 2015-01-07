@@ -10,7 +10,10 @@ module.exports = function(grunt){
         sass_wp_template_url: "$wp-template-url: 'http://127.0.0.1:8080/wordpress/wp-content/themes/wp_template_dest';",
         
         //Change this variable to the name you wish to give to the dist folder. This name should be the wordpress template name.
-        dist: 'wp_template_dest'
+        dist: 'wp_template_dest',
+        
+        //Root folder of the project. DO NOT CHANGE THIS, UNLESS YOU KNOW WHAT YOU'RE DOING.
+        root: './'
     };
    
     //------------------------------------------------------------------------------------------------------------------->
@@ -30,7 +33,7 @@ module.exports = function(grunt){
             dev: {
                 options: {
                     sassDir: 'stylesheets',
-                    cssDir: './', //specify the route of the project to emit the compiled css file
+                    cssDir: '<%= config.root %>', //specify the route of the project to emit the compiled css file
                     noLineComments: false,
                     outputStyle: 'compressed'
                 }
@@ -110,14 +113,6 @@ module.exports = function(grunt){
             }
         },
         
-        //Dynamically concat and minify javascript or css files, based on the specified comment blocks in the files.
-        useminPrepare: {
-            html: '*.php',
-            options: {
-                dest: '<%= config.dist %>/'
-            }
-        },       
-        
         //Create dist directory by copying wanted files from production (aka root) folder
         copy: { 
             //Copy folders apart from some and move it to the new dist folder
@@ -140,12 +135,39 @@ module.exports = function(grunt){
             }
         },
         
-        //Update files that have been useminPrepared. 
+        //Remove the '<?php bloginfo('template_url'); ?>' snippet from any PHP files
+        //which include it in a script's src attribute (e.g src="<?php bloginfo('template_url'); ?>/bower_components/jquery/dist/jquery.min.js"). 
+        //This is to prepare script references in PHP files for being processed by the useminPrepare task.  
+        replace: {
+            wp_bloginfo_references: {
+                src: ['<%= config.dist %>/*.php'],            
+                dest: '<%= config.dist %>/',             
+                replacements: [{
+                    //The HTML 5 data attribute is used to help identify which
+                    //scripts are using <?php bloginfo('template_url'); ?> in their src property.
+                    from: "data=\"grunt-js-replace-plugin-remove-wp-bloginfo\" src=\"<?php bloginfo('template_url'); ?>/",                  
+                    to: 'src="'
+                }]
+            }
+        },
+        
+        //Dynamically concat and minify javascript or css files, based on the specified comment blocks in the files.
+        useminPrepare: {
+            html: '<%= config.dist %>/*.php',
+            options: {
+                root: '<%= config.root %>',
+                dest: '<%= config.dist %>/'
+            }
+        },       
+        
+        //Update files' script references that have been useminPrepared. 
         usemin: {
             html: '<%= config.dist %>/*.php',
             options: {
                 blockReplacements: {
                     js: function(block){
+                        //Put back the <?php bloginfo('template_url'); ?> snippet.
+                        //So that script references will work according to wordpress
                         return '<script src="<?php bloginfo(\'template_url\'); ?>/' + block.dest + '"></script>';
                     }
                 }
@@ -167,8 +189,8 @@ module.exports = function(grunt){
     grunt.loadNpmTasks('grunt-contrib-cssmin'); //Minifies css.
     grunt.loadNpmTasks('grunt-processhtml'); //Change html files. Used for changing directory paths for stylesheets and javascript in build environment.
     grunt.loadNpmTasks('grunt-contrib-clean'); //Delete folders and files
-    grunt.loadNpmTasks('grunt-usemin');
-    
+    grunt.loadNpmTasks('grunt-usemin'); //Use minification processes
+    grunt.loadNpmTasks('grunt-text-replace'); //Replace string text throughout files. 
 
     // 4. Where we tell Grunt what to do when we type "grunt" into the terminal.
     
@@ -177,6 +199,7 @@ module.exports = function(grunt){
     grunt.registerTask('deploy_build', [
         'clean:dist', //Delete any existing dist folders.
         'copy:dist', //Copy folders to create a dist folder
+        'replace:wp_bloginfo_references', //Replace 
         'useminPrepare', //Prepare minification processes
         'concat:generated', //Concat javascript
         'uglify:generated', //Minify javascript

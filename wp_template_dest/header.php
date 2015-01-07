@@ -29,14 +29,7 @@
         
         <!-- JavaScript Libraries-->
         
-        <!-- build:js javascript/libs/libs-js.min.js -->
-        <script data="grunt-js-replace-plugin-remove-wp-bloginfo" src="<?php bloginfo('template_url'); ?>/bower_components/jquery/dist/jquery.min.js"></script>
-        <script data="grunt-js-replace-plugin-remove-wp-bloginfo" src="<?php bloginfo('template_url'); ?>/bower_components/velocity/velocity.min.js"></script>
-        <script data="grunt-js-replace-plugin-remove-wp-bloginfo" src="<?php bloginfo('template_url'); ?>/bower_components/velocity/velocity.ui.min.js"></script>
-        <script data="grunt-js-replace-plugin-remove-wp-bloginfo" src="<?php bloginfo('template_url'); ?>/bower_components/blast-text/jquery.blast.min.js"></script>
-        <script data="grunt-js-replace-plugin-remove-wp-bloginfo" src="<?php bloginfo('template_url'); ?>/bower_components/modernizr/modernizr.js"></script>
-        <script data="grunt-js-replace-plugin-remove-wp-bloginfo" src="<?php bloginfo('template_url'); ?>/bower_components/detect-mobile-browser/detectmobilebrowser.js"></script>
-        <!-- endbuild -->
+        <script src="<?php bloginfo('template_url'); ?>/javascript/libs/libs-js.min.js"></script>
         
         <!-- Google Maps API Key -->
         <!--<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA_SqQ1jC2XCd-NuCxCgSNuq3Cxv6QVf8s&sensor=false"></script>-->
