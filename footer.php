@@ -33,6 +33,7 @@
             <script data="grunt-js-replace-plugin-remove-wp-bloginfo" src="<?php bloginfo('template_url'); ?>/javascript-authored/panel-collapse-toggle.js"></script>
             <script data="grunt-js-replace-plugin-remove-wp-bloginfo" src="<?php bloginfo('template_url'); ?>/javascript-authored/google-maps.js"></script>
             <!-- endbuild -->
+            
         </div>
     <?php wp_footer(); ?>
     </body>

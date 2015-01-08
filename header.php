@@ -12,7 +12,7 @@
     <head>
         
         <meta charset="<?php bloginfo('charset'); ?>">
-        <meta name="viewport" content="width=device-width">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
         <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- Tells IE to use the latest version possible -->
         <meta name="author" content="Gary Baron">
         <meta name="website designer and developer" content="Robert Liverpool">
@@ -24,11 +24,10 @@
         
         <!-- Style sheets -->
         <link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/bootstrap/css/bootstrap.min.css" media="screen" />
-        <link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/bower_components/fontawesome/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/bower_components/fontawesome/css/font-awesome.min.css" media="screen" />
         <link rel="stylesheet" href="<?php echo get_stylesheet_uri(); ?>" media="screen" />
         
         <!-- JavaScript Libraries-->
-        
         <!-- build:js javascript/libs/libs-js.min.js -->
         <script data="grunt-js-replace-plugin-remove-wp-bloginfo" src="<?php bloginfo('template_url'); ?>/bower_components/jquery/dist/jquery.min.js"></script>
         <script data="grunt-js-replace-plugin-remove-wp-bloginfo" src="<?php bloginfo('template_url'); ?>/bower_components/velocity/velocity.min.js"></script>
